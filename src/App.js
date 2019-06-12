@@ -66,6 +66,7 @@ class DictWord extends React.Component {
     };
   }
 
+  //This is soley for debugging the googledictionaryapi ;)
   consoleDict(word) {
     fetch('https://googledictionaryapi.eu-gb.mybluemix.net/?define=' + word + '&lang=en').then(function(response) {
       return response.json();
@@ -105,7 +106,6 @@ class DictWord extends React.Component {
        var defMeanings = def.meaning;
        var meaningArray = [];
        for (let [key, value] of Object.entries(defMeanings)) {
-         console.log(value);
          meaningArray.push({
            type: key,
            definitions: value
@@ -144,7 +144,6 @@ class DictWord extends React.Component {
 
    getBody() {
      if (this.state.definitions[this.state.idef]) {
-       var def = this.state.definitions[this.state.idef];
        return (
          <Modal.Body>
            <p>{this.displayKeyValuePair('Phonetic', this.state.definitions[this.state.idef].phonetic)}</p>
@@ -160,10 +159,8 @@ class DictWord extends React.Component {
       return response.json();
     })
     .then( (jsonResponse) =>  {
-      console.log(JSON.stringify(jsonResponse));
       var definitions = [];
       for (var def in jsonResponse) {
-        console.log(jsonResponse[def]);
         definitions.push(jsonResponse[def]);
       }
       this.setState({ definitions: definitions});
