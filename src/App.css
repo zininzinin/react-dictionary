@@ -19,6 +19,19 @@
   color: white;
 }
 
+.selected {
+  color: #61dafb;
+}
+
+.word:hover {
+  color: #61dafb;
+}
+
+span.key {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
 .App-link {
   color: #61dafb;
 }

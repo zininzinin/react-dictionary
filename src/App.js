@@ -17,16 +17,12 @@ function App() {
 
 class Dict extends React.Component {
   render() {
-    const text = "This is just an example text babyshark you're welcome :)";
+    const text = "This is just an example text ~babyshark~ you're welcome :)";
 
     return (
       <div className="dict">
         <div className="dict-text">
           <DictText value={text}/>
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
         </div>
       </div>
     );
@@ -112,7 +108,7 @@ class DictWord extends React.Component {
          })
        }
        const rendMeanings = meaningArray.map((meaning, index) =>
-         <li key={index}>{meaning.type}
+         <li key={index}><span className="key">{meaning.type}</span>
            <ul>
            {this.getDefinition(meaning.definitions)}
            </ul>
@@ -124,12 +120,14 @@ class DictWord extends React.Component {
 
    getDefinition(defs) {
      const rendMeanings = defs.map((def, index) =>
-       <div key={index}>
-         <ul>
-            <li>{this.displayKeyValuePair('Definition', def.definition)}</li>
-            { def.example && (<li>{this.displayKeyValuePair('Example', def.example)}</li>) }
-         </ul>
-       </div>
+         <div key={index}>
+         {(def.definition || def.example) && //Have to do this because there were some empty ones being returned /shrug
+           <ul>
+              <li>{this.displayKeyValuePair('Definition', def.definition)}</li>
+              { def.example && (<li>{this.displayKeyValuePair('Example', def.example)}</li>) }
+           </ul>
+         }
+         </div>
      );
      return rendMeanings;
    }
@@ -137,7 +135,7 @@ class DictWord extends React.Component {
    displayKeyValuePair(key, value) {
      if (value) {
        return (
-         <span><span>{key + ': '}</span>{value}</span>
+         <span><span className="key">{key + ': '}</span>{value}</span>
        )
      }
    }
@@ -177,7 +175,7 @@ class DictWord extends React.Component {
   render() {
     return (
       <span>
-        <span className="dict-word" onClick={ () => this.modalDict(this.props.value)}>
+        <span className={this.state.show ? 'word selected' : 'word'} onClick={ () => this.modalDict(this.props.value)}>
           {this.props.value + ' '}
         </span>
         <Modal show={this.state.show} onHide={this.handleClose}>
